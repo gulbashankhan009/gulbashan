@@ -154,9 +154,9 @@ function App() {
       // 2. Add Gmail service and create a template
       // 3. Replace these values with your actual EmailJS credentials
       
-      const serviceId = 'service_gulbashan'; // Your EmailJS service ID
-      const templateId = 'template_portfolio'; // Your EmailJS template ID  
-      const publicKey = 'YOUR_EMAILJS_PUBLIC_KEY'; // Your EmailJS public key
+const serviceId = 'service_1ow9tzj'; // Replace with your Service ID
+const templateId = 'template_tf4fqti'; // Replace with your Template ID  
+const publicKey = 'tFQVL7m73zqFrnHp-'; // Replace with your Public Key
       
       // Template parameters that will be sent to your email template
       const templateParams = {
