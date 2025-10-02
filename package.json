@@ -1,7 +1,7 @@
 {
   "name": "myportfolio_gulbashan",
   "version": "0.1.0",
-  "homepage": "https://gulbashan.github.io/gulbashan",
+  "homepage": "https://gulbashankhan009.github.io/gulbashan",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",

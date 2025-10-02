@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import "./App.css";
 import kbtfiesta from "./images/kbtfiesta.png";
@@ -16,7 +16,7 @@ const techLogos = [
   { name: "VBA", img: "https://cdn-icons-png.flaticon.com/512/5968/5968389.png" },
   { name: "SQL", img: "https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png" },
   { name: ".NET Core", img: "https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg" },
-  { name: "Azure", img: "http://svgrepo.com/show/353467/azure-icon.svg" },
+  { name: "Azure", img: "https://logos-world.net/wp-content/uploads/2021/02/Microsoft-Azure-Emblem.png" },
   { name: "Angular", img: "https://angular.io/assets/images/logos/angular/angular.svg" },
   { name: "JavaScript", img: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" },
   { name: "TypeScript", img: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" },
@@ -25,9 +25,9 @@ const techLogos = [
 // Services
 const services = [
   { name: "Web Development", desc: "Build stunning websites", img: "https://img.icons8.com/color/96/web.png" },
-  { name: "Android Development", desc: "Create Android apps", img: "https://img.icons8.com/color/96/android.png" },
+  { name: "Android Development", desc: "Create Android apps", img: "https://images.vexels.com/media/users/3/139556/isolated/svg/1718a076e29822051df8bcf8b5ce1124.svg" },
   { name: "iOS Development", desc: "Develop iOS apps", img: "https://img.icons8.com/color/96/ios-logo.png" },
-  { name: "Ecommerce Development", desc: "Online store solutions", img: "https://img.icons8.com/color/96/ecommerce.png" },
+  { name: "Ecommerce Development", desc: "Online store solutions", img: "https://www.onlinelogomaker.com/blog/wp-content/uploads/2017/06/shopping-online.jpg" },
   { name: "Plugin Development", desc: "Custom plugin solutions", img: "https://img.icons8.com/color/96/plugin.png" },
 ];
 
@@ -86,6 +86,11 @@ const experiences = [
 
 function App() {
   const sliderRef = useRef(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   const scrollProjects = (direction) => {
     const width = sliderRef.current.clientWidth;
@@ -98,6 +103,7 @@ function App() {
 
   const scrollTo = (id) => {
     document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    setMobileMenuOpen(false); // Close mobile menu after navigation
   };
 
   return (
@@ -105,7 +111,9 @@ function App() {
       {/* Header */}
       <header className="header">
         <div className="logo">Gulbashan</div>
-        <nav className="nav">
+        
+        {/* Desktop Navigation */}
+        <nav className="nav desktop-nav">
           <span onClick={() => scrollTo("hero")}>Home</span>
           <span onClick={() => scrollTo("about")}>About</span>
           <span onClick={() => scrollTo("projects")}>Projects</span>
@@ -113,6 +121,24 @@ function App() {
           <span onClick={() => scrollTo("services")}>Services</span>
           <span onClick={() => scrollTo("contact")}>Contact</span>
           <button className="hire-button" onClick={() => scrollTo("contact")}>Hire Me</button>
+        </nav>
+        
+        {/* Mobile Menu Button */}
+        <button className="mobile-menu-btn" onClick={toggleMobileMenu}>
+          <span className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}></span>
+        </button>
+        
+        {/* Mobile Navigation */}
+        <nav className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
+          <span onClick={() => scrollTo("hero")}>Home</span>
+          <span onClick={() => scrollTo("about")}>About</span>
+          <span onClick={() => scrollTo("projects")}>Projects</span>
+          <span onClick={() => scrollTo("technologies")}>Technologies</span>
+          <span onClick={() => scrollTo("services")}>Services</span>
+          <span onClick={() => scrollTo("contact")}>Contact</span>
+          <button className="hire-button mobile-hire-btn" onClick={() => scrollTo("contact")}>Hire Me</button>
         </nav>
       </header>
 
@@ -174,7 +200,7 @@ function App() {
                 <div className="tech-used">
                   {p.tech.map((t, i) => <img key={i} src={t} alt="tech" />)}
                 </div>
-                <a href={p.link} className="project-link">View Project</a>
+                <a href={p.link} className="project-link" target="_blank" rel="noopener noreferrer">View Project</a>
               </div>
             ))}
           </div>
