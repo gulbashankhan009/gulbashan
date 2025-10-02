@@ -38,25 +38,47 @@ const projects = [
     title: "KBT fiesta - UAE Marketplace",
     img: kbtfiesta,
     link: "https://kbtfiesta.com",
-    tech: ["https://cdn.worldvectorlogo.com/logos/react-2.svg", "https://angular.io/assets/images/logos/angular/angular.svg"],
+    tech: [
+      "https://angular.io/assets/images/logos/angular/angular.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png",
+      "https://logos-world.net/wp-content/uploads/2021/02/Microsoft-Azure-Emblem.png"
+    ],
   },
   {
     title: "KesarKottage",
     img: kesarkottage,
     link: "https://kesarkottage.com",
-    tech: ["https://cdn.worldvectorlogo.com/logos/javascript.svg", "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"],
+    tech: [
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png",
+      "https://angular.io/assets/images/logos/angular/angular.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg",
+      "https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg",
+      "https://logos-world.net/wp-content/uploads/2021/02/Microsoft-Azure-Emblem.png"
+    ],
   },
   {
     title: "Oaklores",
     img: oaklores,
     link: "https://oaklores.com",
-    tech: ["https://cdn.worldvectorlogo.com/logos/dot-net.svg"],
+    tech: [
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png",
+      "https://angular.io/assets/images/logos/angular/angular.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png",
+      "https://logos-world.net/wp-content/uploads/2021/02/Microsoft-Azure-Emblem.png"
+    ],
   },
   {
     title: "Turan and Tarub",
     img: turanandtarub,
     link: "https://turanandtarub.com",
-    tech: ["https://cdn.worldvectorlogo.com/logos/sql.svg"],
+    tech: [
+      "https://cdn.worldvectorlogo.com/logos/react-2.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png",
+      "https://logos-world.net/wp-content/uploads/2021/02/Microsoft-Azure-Emblem.png"
+    ],
   },
 ];
 
