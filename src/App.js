@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
+import emailjs from '@emailjs/browser';
 import "./App.css";
 import kbtfiesta from "./images/kbtfiesta.png";
 import kesarkottage from "./images/kesarkottage.png";
@@ -87,6 +88,14 @@ const experiences = [
 function App() {
   const sliderRef = useRef(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' });
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -104,6 +113,129 @@ function App() {
   const scrollTo = (id) => {
     document.getElementById(id).scrollIntoView({ behavior: "smooth" });
     setMobileMenuOpen(false); // Close mobile menu after navigation
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Please fill in all required fields (Name, Email, and Message).'
+      });
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Please enter a valid email address.'
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: '', message: '' });
+
+    try {
+      // EmailJS configuration - you'll need to set up your EmailJS account
+      // 1. Go to https://www.emailjs.com/ and create a free account
+      // 2. Add Gmail service and create a template
+      // 3. Replace these values with your actual EmailJS credentials
+      
+      const serviceId = 'service_gulbashan'; // Your EmailJS service ID
+      const templateId = 'template_portfolio'; // Your EmailJS template ID  
+      const publicKey = 'YOUR_EMAILJS_PUBLIC_KEY'; // Your EmailJS public key
+      
+      // Template parameters that will be sent to your email template
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone || 'Not provided',
+        message: formData.message,
+        to_email: 'gulapsakhan415@gmail.com',
+        reply_to: formData.email
+      };
+
+      // Send email using EmailJS
+      const result = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      if (result.text !== 'OK') {
+        throw new Error('Failed to send email');
+      }
+      
+      setSubmitStatus({
+        type: 'success',
+        message: 'Thank you! Your message has been sent successfully. I\'ll get back to you soon!'
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      
+      // Fallback to mailto if EmailJS fails
+      const emailSubject = `Portfolio Contact from ${formData.name}`;
+      const emailBody = `
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
+
+Message:
+${formData.message}
+
+---
+Sent from Portfolio Contact Form
+      `.trim();
+      
+      const mailtoLink = `mailto:gulapsakhan415@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      
+      setSubmitStatus({
+        type: 'error',
+        message: (
+          <div>
+            EmailJS is not configured yet. <br/>
+            <a 
+              href={mailtoLink}
+              style={{color: '#00ffff', textDecoration: 'underline'}}
+              onClick={() => {
+                // Reset form after opening mailto
+                setTimeout(() => {
+                  setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    message: ''
+                  });
+                }, 1000);
+              }}
+            >
+              Click here to send email via your default email client
+            </a>
+            <br/>
+            Or contact me directly at gulapsakhan415@gmail.com
+          </div>
+        )
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -238,12 +370,53 @@ function App() {
       {/* Contact */}
       <section className="contact" id="contact">
         <h2>Contact Me</h2>
-        <form className="contact-form">
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <textarea placeholder="Message" rows="5"></textarea>
-          <button type="submit">Send Message</button>
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <input 
+            type="text" 
+            name="name"
+            placeholder="Name *" 
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+          <input 
+            type="email" 
+            name="email"
+            placeholder="Email *" 
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
+          <input 
+            type="tel" 
+            name="phone"
+            placeholder="Phone Number (Optional)" 
+            value={formData.phone}
+            onChange={handleInputChange}
+          />
+          <textarea 
+            name="message"
+            placeholder="Message *" 
+            rows="5"
+            value={formData.message}
+            onChange={handleInputChange}
+            required
+          ></textarea>
+          
+          {submitStatus.message && (
+            <div className={`form-status ${submitStatus.type}`}>
+              {submitStatus.message}
+            </div>
+          )}
+          
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+          </button>
         </form>
+        
+        <div className="contact-info">
+          <p>Or reach me directly at: <a href="mailto:gulapsakhan415@gmail.com">gulapsakhan415@gmail.com</a></p>
+        </div>
       </section>
 
       {/* Footer */}
